@@ -7,14 +7,14 @@ const TRY_FILENAMES = ['template', 'template/welcome-cadet.md'].map(basename =>
   path.resolve(__dirname, basename)
 )
 
-console.log("TRY_FILENAMES", TRY_FILENAMES)
+// console.log('TRY_FILENAMES', TRY_FILENAMES)
 function logWelcomeLetter ({ cosmonautId, shuttle }) {
   bluebird
     .filter(TRY_FILENAMES, filename =>
       fs.lstat(filename).then(stat => stat.isFile() && !stat.isDirectory())
     )
     .then(filenames => {
-      console.log("filenames", filenames)
+      // console.log('filenames', filenames)
       // take the first file, assume it's the desired template
       const templateFilename = filenames[0]
       log(`selected cadet welcome template file: ${templateFilename}`)
