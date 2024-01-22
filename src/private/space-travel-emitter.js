@@ -7,7 +7,7 @@ async function schedule (emitter) {
     emitter.emit('space-request', { cosmonautId: id })
     // if (id !== 1) await bluebird.delay(id * 100)
     // await bluebird.delay(id * 100);
-    await bluebird.delay(100);
+    await bluebird.delay(100)
   }
   await bluebird.delay(100) // yep! otherwise, too many hints for the test taker
   emitter.emit('end', null)

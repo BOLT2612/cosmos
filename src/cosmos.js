@@ -27,21 +27,14 @@ const listen = async () => {
   })
 }
 
-// [
-//'{"date":10,"name":"discovery","crew":[],"remainingCapacity":1}',
-//    '{"date":3,"name":"sputnik-2","crew":[],"remainingCapacity":3}',
-//    '{"date":-5,"name":"tom-hanks","crew":[],"remainingCapacity":0}'
-// ]
 const onSpaceTravelRequested = async ({ shuttleDb, cosmonautId }) => {
   const shuttles = await shuttleDb.read()
   const availableShuttleData = Object.values(shuttles)
-  // console.log('availableShuttleData', availableShuttleData)
 
   const availableShuttleParsed = availableShuttleData.map(x => {
     if (typeof x === 'string') return JSON.parse(x)
     else return x
   })
-  // console.log(availableShuttleParsed)
   const availableShuttle = availableShuttleParsed.find(
     ({ date, remainingCapacity }) => {
       if (date >= 0 && remainingCapacity > 0) return true
@@ -57,17 +50,11 @@ const onSpaceTravelRequested = async ({ shuttleDb, cosmonautId }) => {
     `found shuttle for cosmonautId ${cosmonautId}, shuttle ${
       availableShuttle.name
     }`
-  );
-  // console.log("availableShuttle", availableShuttle);
+  )
 
   --availableShuttle.remainingCapacity
-  // console.log("availableShuttle", availableShuttle);
-
-
 
   availableShuttle.crew.push(cosmonautId)
-  // console.log(`\nJust pushed cosmonautId ${cosmonautId}  to crew of ${availableShuttle.name}`);
-  // console.log(availableShuttle);
 
   await shuttleDb.write(availableShuttle.name, availableShuttle)
   await cadet.logWelcomeLetter({ cosmonautId, shuttle: availableShuttle })
